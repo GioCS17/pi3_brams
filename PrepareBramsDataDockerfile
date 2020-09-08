@@ -1,0 +1,33 @@
+FROM ubuntu:18.04 AS builder
+LABEL mantainer="Adrian Ruiz aerf2007@gmail.com"
+WORKDIR /tools
+RUN apt-get update && \
+    apt-get install -y build-essential wget gcc gfortran && \
+    # Get and Compile wgrib2
+    wget -nc ftp://ftp.cpc.ncep.noaa.gov/wd51we/wgrib2/wgrib2.tgz && \
+    tar -xzvf ${rootAbsoluteFolder}/tools/wgrib2.tgz && \
+    cd grib2 && \
+    export CC=gcc && \
+    export FC=gfortran && \
+    make && \
+    cd .. && \
+    # Get g2ctl
+    wget -nc ftp://ftp.cpc.ncep.noaa.gov/wd51we/g2ctl/g2ctl && \
+    chmod +x g2ctl && \
+    # Get and Compile geraDP
+    wget -nc http://ftp.cptec.inpe.br/brams/DPREP-CHEM_GERADP/DPREP-CHEM_GERADP-5.1.0.tgz && \
+    tar -zxvf DPREP-CHEM_GERADP-5.1.0.tgz DPREP-CHEM-5.1.0/geraDP && \
+    mv DPREP-CHEM-5.1.0/geraDP ./geraDP && \
+    rm -rf DPREP-CHEM-5.1.0 && \
+    rm -f DPREP-CHEM_GERADP-5.1.0.tgz && \
+    gfortran geraDP/geraDP.f90 -o geraDP/geraDP.x
+
+
+
+FROM ubuntu:18.04
+WORKDIR /scripts
+COPY --from=builder /tools /tools
+RUN apt-get update && apt-get install -y aria2 grads libgomp1 perl-modules-5.26 && \
+    ln -s /tools/grib2/wgrib2/wgrib2 /usr/local/bin/wgrib2 && \
+    ln -s /tools/g2ctl /usr/local/bin/g2ctl
+CMD /bin/bash

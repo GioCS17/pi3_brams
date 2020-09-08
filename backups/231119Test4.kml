@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+<name>Shapes</name>
+<Placemark>
+    <name>Sudamerica</name>
+    <description>Shape</description>
+    <Polygon>
+        <outerBoundaryIs>
+            <LinearRing>
+                <coordinates>-120,-59 -29,-59 -29,15 -120,15 -120,-59</coordinates>
+            </LinearRing>
+        </outerBoundaryIs>
+    </Polygon>
+</Placemark>
+<Placemark>
+    <name>EjemploBrams</name>
+    <description>Shape</description>
+    <Polygon>
+        <outerBoundaryIs>
+            <LinearRing>
+                <coordinates>-58.467,6.675 -42.533,6.675 -42.484,-9.151 -58.516,-9.151 -58.467,6.675 </coordinates>
+            </LinearRing>
+        </outerBoundaryIs>
+    </Polygon>
+</Placemark>
+<Placemark>
+    <name>PeruCentroCambiado</name>
+    <description>Shape</description>
+    <Polygon>
+        <outerBoundaryIs>
+            <LinearRing>
+                <coordinates>-82.967,-1.075 -67.033,-1.075 -66.984,-16.901 -83.016,-16.901 -82.967,-1.075 </coordinates>
+            </LinearRing>
+        </outerBoundaryIs>
+    </Polygon>
+</Placemark>
+</Document>
+</kml>

@@ -1,0 +1,25 @@
+FROM ubuntu:18.04 AS builder
+LABEL mantainer="Adrian Ruiz aerf2007@gmail.com"
+RUN apt-get update && \
+    apt-get install -y wget build-essential gcc gfortran mpich zlib1g-dev && \
+    # Get and Compile BRAMS
+    wget -nc -P /tmp http://ftp1.cptec.inpe.br/brams/BRAMS/brams-5.3-src.tgz && \
+    mkdir /brams_src && \
+    mkdir /brams-5.3 && \
+    tar -zxvf /tmp/brams-5.3-src.tgz -C /brams_src && \
+    # Fix Problems on Brams Code (BRAMS5.3) With GFortran and GCC
+    sed -i 's/STOP\x27init_top\x27/STOP \x27init_top\x27/' /brams_src/src/jules/LIB/SOURCE/SUBROUTINES/INITIALISATION/init_top.f90 && \
+    sed -i 's/integer,  dimension (12) :: seed/integer,  dimension (33) :: seed/' /brams_src/src/brams/cuparm/module_cu_g3.f90 && \
+    # Build and Make
+    cd /brams_src/build && \
+    ./configure -program-prefix=BRAMS -prefix=/brams-5.3 -enable-jules -with-chem=RELACS_TUV -with-aer=SIMPLE -with-fpcomp=/usr/bin/mpif90 -with-cpcomp=/usr/bin/mpicc -with-fcomp=gfortran -with-ccomp=gcc && \
+    make && make install
+
+FROM ubuntu:18.04
+COPY --from=builder /brams-5.3 /brams-5.3
+ENV TMPDIR=/data/tmp
+WORKDIR /scripts
+RUN apt-get update && apt-get install -y mpich && \
+    ln -s ${toolsAbsoluteFolder}/brams-5.3/bin/brams-5.3 /usr/local/bin/brams && \
+    mkdir -p /data/tmp
+CMD /bin/bash

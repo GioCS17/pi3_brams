@@ -1,0 +1,50 @@
+version: "3.7"
+services:
+  prepare-data:
+    build:
+      context: .
+      dockerfile: PrepareBramsDataDockerfile
+    image: prepare-brams-data:latest
+    # container_name: prepare-data
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./scripts:/scripts
+      - ./datain:/data/datain
+      - ./shared_datain:/data/shared_datain
+  brams:
+    build:
+      context: .
+      dockerfile: BramsDockerfile
+    image: brams:5.3
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./scripts:/scripts
+      - ./datain:/data/datain
+      - ./shared_datain:/data/shared_datain
+      - ./dataout:/data/dataout
+  results:
+    build:
+      context: .
+      dockerfile: ResultsDockerfile
+    image: results-brams  
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./scripts:/scripts
+      - ./dataout:/data/dataout
+  brabu:
+    build:
+      context: .
+      dockerfile: BrabuDockerfile
+    image: brams-brabu
+    environment: 
+      - DISPLAY=${DISPLAY}
+      - MAGIC_NUMBER=7ec0a84a51553cc74b4c691a7a0d53cc
+    volumes:
+      - ./scripts:/scripts
+      - /tmp/.X11-unix/:/tmp/.X11-unix/

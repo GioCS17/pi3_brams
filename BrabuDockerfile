@@ -1,0 +1,24 @@
+FROM python:3.5-slim-buster
+LABEL mantainer="Adrian Ruiz aerf2007@gmail.com"
+
+ENV BRABU_DATA_DIR=/usr/local/data
+
+RUN apt-get -y update && apt-get -y install libgl1 xcb qt5-default wget bzip2 xauth && \
+    echo -e "\n1. Install pre-requisites and create BRABU directories" && \
+    python3.5 -m pip install --upgrade pip && \
+    echo -e "\n2. Installing brabu and some dependencies ... " && \
+    python3.5 -m pip install -U --no-cache-dir brabu-py3.5 && \
+    cd /usr/local && \
+    echo -e "\n3. Downloading conda basemap ..." && \
+    wget https://anaconda.org/anaconda/basemap/1.0.7/download/linux-64/basemap-1.0.7-np113py35_0.tar.bz2 && \
+    tar -xvjf basemap-1.0.7-np113py35_0.tar.bz2 && \
+    rm basemap-1.0.7-np113py35_0.tar.bz2 && \
+    echo -e "\n5. Installing geos ..." && \
+    wget https://anaconda.org/anaconda/geos/3.6.2/download/linux-64/geos-3.6.2-heeff764_2.tar.bz2 && \
+    tar -xvjf geos-3.6.2-heeff764_2.tar.bz2 && \
+    rm geos-3.6.2-heeff764_2.tar.bz2 && \
+    ln -s /usr/local/lib/libgeos-3.6.2.so /usr/local/lib/libgeos-3.5.0.so && \
+    echo -e "\n6. Preparing XAUTH ..." && \
+    touch /root/.Xauthority
+
+CMD ["/bin/bash","-c","xauth add ${DISPLAY} . ${MAGIC_NUMBER} && python3.5 /usr/local/lib/python3.5/site-packages/brabu/brabu.py"]

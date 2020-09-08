@@ -1,0 +1,5 @@
+FROM ubuntu:18.04 AS builder
+LABEL mantainer="Adrian Ruiz aerf2007@gmail.com"
+WORKDIR /scripts
+RUN apt-get update && apt-get install -y aria2 grads imagemagick
+CMD /bin/bash
