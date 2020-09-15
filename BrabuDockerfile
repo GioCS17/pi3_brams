@@ -10,7 +10,7 @@ RUN apt-get -y update && apt-get -y install libgl1 xcb qt5-default wget bzip2 xa
     python3.5 -m pip install -U --no-cache-dir brabu-py3.5 && \
     cd /usr/local && \
     echo -e "\n3. Downloading conda basemap ..." && \
-    wget https://anaconda.org/anaconda/basemap/1.0.7/download/linux-64/basemap-1.0.7-np113py35_0.tar.bz2 && \
+    wget https://repo.anaconda.com/pkgs/free/linux-64/basemap-1.0.7-np113py35_0.tar.bz2 && \
     tar -xvjf basemap-1.0.7-np113py35_0.tar.bz2 && \
     rm basemap-1.0.7-np113py35_0.tar.bz2 && \
     echo -e "\n5. Installing geos ..." && \
