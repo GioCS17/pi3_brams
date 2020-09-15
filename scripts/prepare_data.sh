@@ -181,8 +181,8 @@ function getSSTFiles {
     if [ ! -f "$sstFolder/${startDate:0:4}/WHEADER" ]; then
         echo "WHEADER File don't exist... Downloading..."
         aria2c -x16 -s16 -d $sstFolder/${startDate:0:4}  ${cptecSourceDataAddress}/week-sst/sst012.tar.gz
-        tar -zxvf $sstFolder/${startDate:0:4}/sst${startDate:0:4}.tar.gz -C $sstFolder/${startDate:0:4}
-        rm -f $sstFolder/${startDate:0:4}/sst${startDate:0:4}.tar.gz
+        tar -zxvf $sstFolder/${startDate:0:4}/sst012.tar.gz -C $sstFolder/${startDate:0:4}
+        rm -f $sstFolder/${startDate:0:4}/sst012.tar.gz
         echo "WHEADER File downloaded successfully..."
     fi
 }
@@ -243,6 +243,31 @@ function getMODISNDVI {
     done
 }
 
+function getGLFAOINPE {
+    printf "\nChecking if GLFAO files exist...\n"
+
+    if [ ! -f "$surfaceFolder/GL_FAO_INPE" ]; then
+        echo "GLFAO files don't exist... Downloading GLFAO Files..."
+        wget -nc -P $surfaceFolder ${cptecSourceDataAddress}/soil-fao/GL_FAO_INPE.tar.gz
+        mkdir $glfaoFolder
+        tar -zxvf $surfaceFolder/GL_FAO_INPE.tar.gz -C $glfaoFolder
+        mv $glfaoFolder/soil-fao/* $glfaoFolder
+        rm -f $surfaceFolder/GL_FAO_INPE.tar.gz
+        rm -rf $glfaoFolder/soil-fao
+    fi
+}
+
+function getGLOGEINPE {
+    printf "\nChecking if GLOGE files exist...\n"
+
+    if [ ! -f "$surfaceFolder/GL_OGE_INPE" ]; then
+        echo "GLOGE files don't exist... Downloading GLOGE Files..."
+        wget -nc -P $surfaceFolder ${cptecSourceDataAddress}/prep-chem/surface_data/GL_OGE_INPE.tar.gz
+        tar -zxvf $surfaceFolder/GL_OGE_INPE.tar.gz -C $surfaceFolder
+        rm -f $surfaceFolder/GL_OGE_INPE.tar.gz
+    fi
+}
+
 
 ######################## MAIN #####################################
 
@@ -262,6 +287,9 @@ sstFolder=${dataFolder}/datain/SST #SST Folder
 dpsDirectory=${dataFolder}/datain/dp-files/${startDate} #DPS destiny folder
 soilMostureFolder=${dataFolder}/datain/UMIDADE/${startDate} #Soil Mosture Folder
 ndviMODISFolder=${dataFolder}/shared_datain/SURFACE_DATA/NDVI-MODIS_vfm #NDVI Folder
+surfaceFolder=${dataFolder}/shared_datain/SURFACE_DATA/ #GLFAO Folder
+glfaoFolder=${dataFolder}/shared_datain/SURFACE_DATA/GL_FAO_INPE #GLFAO Folder
+glogeFolder=${dataFolder}/shared_datain/SURFACE_DATA/GL_OGE_INPE #GLOGE Folder
 topographyFolder=${dataFolder}/shared_datain/SURFACE_DATA/topo1km #NDVI Folder
 
 
@@ -315,4 +343,10 @@ getMODISNDVI
 #Check or Download Topography Files
 getTopographyData
 
-#TODO : Download Folders GL_FAO_INPE GL_OGE_INPE
+#Check or Download GLFAO Files
+getGLFAOINPE
+
+#Check or Download GLOGE Files
+getGLOGEINPE
+
+
