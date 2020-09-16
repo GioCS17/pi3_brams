@@ -171,9 +171,12 @@ function getSSTFiles {
         echo "SST don't exist... Downloading new files..."
         mkdir $sstFolder/${startDate:0:4}
         # wget -nc -P $sstFolder/${startDate:0:4}  ${cptecSourceDataAddress}/week-sst/sst${startDate:0:4}.tar.gz
-        aria2c -x16 -s16 -d $sstFolder/${startDate:0:4}  ${cptecSourceDataAddress}/week-sst/sst${startDate:0:4}.tar.gz
-        tar -zxvf $sstFolder/${startDate:0:4}/sst${startDate:0:4}.tar.gz -C $sstFolder/${startDate:0:4}
-        rm -f $sstFolder/${startDate:0:4}/sst${startDate:0:4}.tar.gz
+        #aria2c -x16 -s16 -d $sstFolder/${startDate:0:4}  ${cptecSourceDataAddress}/week-sst/sst${startDate:0:4}.tar.gz
+        aria2c -x16 -s16 -d $sstFolder/${startDate:0:4}  ${cptecSourceDataAddress}/week-sst/sst2019.tar.gz
+        #tar -zxvf $sstFolder/${startDate:0:4}/sst${startDate:0:4}.tar.gz -C $sstFolder/${startDate:0:4}
+        tar -zxvf $sstFolder/${startDate:0:4}/sst2019.tar.gz -C $sstFolder/${startDate:0:4}
+        #rm -f $sstFolder/${startDate:0:4}/sst${startDate:0:4}.tar.gz
+        rm -f $sstFolder/${startDate:0:4}/sst2019.tar.gz
         printf "\nSST Files downloaded successfully...\n"
     fi
 
