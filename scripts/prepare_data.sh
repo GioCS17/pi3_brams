@@ -249,7 +249,9 @@ function getMODISNDVI {
 function getGLFAOINPE {
     printf "\nChecking if GLFAO files exist...\n"
 
-    if [ ! -f "$surfaceFolder/GL_FAO_INPE" ]; then
+    if [ -d "$glfaoFolder" ]; then	
+        echo "GLFAO files exist..."
+    else
         mkdir $glfaoFolder
         mkdir $glfaoFolder/tmp
         echo "GLFAO files don't exist... Downloading GLFAO Files..."
@@ -263,7 +265,9 @@ function getGLFAOINPE {
 function getGLOGEINPE {
     printf "\nChecking if GLOGE files exist...\n"
 
-    if [ ! -f "$surfaceFolder/GL_OGE_INPE" ]; then
+    if [ -d "$glogeFolder" ]; then
+        echo "GLOGE files exist..."
+    else
         echo "GLOGE files don't exist... Downloading GLOGE Files..."
         wget -nc -P $surfaceFolder ${cptecSourceDataAddress}/prep-chem/surface_data/GL_OGE_INPE.tar.gz
         tar -zxvf $surfaceFolder/GL_OGE_INPE.tar.gz -C $surfaceFolder
