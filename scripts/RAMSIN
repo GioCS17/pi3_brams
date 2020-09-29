@@ -277,10 +277,10 @@
 ! Microphysics collection tables
 
    MKCOLTAB = 0,             ! Make table: 0 = no, 1 = yes
-   COLTABFN = '/tables/micro/ct2.0',
+   COLTABFN = '/brams-5.3/bin/tables/micro/ct2.0',
                              ! Filename to read or write
 
-   MAPAOTFILE = './tables/rad_carma/infMapAOT.vfm',
+   MAPAOTFILE = '/brams-5.3/bin/tables/rad_carma/infMapAOT.vfm',
    $END
  
   $MODEL_OPTIONS
@@ -326,7 +326,7 @@
                              !    0-none, 2-Mahrer/Pielke, 1-Chen, 3-Harrington
 			     !    4- CARMA  5-reserved,      6- RRTMG
 ! Parameters needed by CARMA radiation scheme
-   RADDATFN  = './tables/rad_carma/rad_param.data',
+   RADDATFN  = '/brams-5.3/bin/tables/rad_carma/rad_param.data',
    
    RADFRQ   = 1200,          ! Freq. of radiation tendency update (s)
    LONRAD   = 1,	      ! Longitudinal variation of shortwave
@@ -745,6 +745,6 @@
    $METEOGRAM
      applyMeteogram = .false.,
      meteogramFreq  = 1800.,
-     meteogramMap  = '/tables/meteogram/citiesBr.txt',
+     meteogramMap  = '/brams-5.3/bin/tables/meteogram/citiesBr.txt',
      meteogramDir   = '/HST2014013012'
    $END

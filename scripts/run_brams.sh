@@ -41,7 +41,7 @@ function runBrams {
     if [ "$runType" = "MAKESFC" ] || [ "$runType" = "MAKEVFILE" ]; then
         mpirun -np 1 brams
     else
-        mpirun -np 1 brams
+        mpirun -np 4 brams
     fi
 }
 
