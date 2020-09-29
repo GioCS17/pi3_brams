@@ -17,9 +17,9 @@ function runBrams {
     actualYearString="   IYEAR1  =${startDate:0:4},      ! Year"
     actualRunTypeString="   RUNTYPE  = '${runType}',    ! Type of run: MAKESFC, INITIAL, HISTORY,"
 
-    sed -i "s/$monthString/$actualMonthString/" RAMSIN
-    sed -i "s/$dateString/$actualDateString/" RAMSIN
-    sed -i "s/$yearString/$actualYearString/" RAMSIN
+    #sed -i "s/$monthString/$actualMonthString/" RAMSIN
+    #sed -i "s/$dateString/$actualDateString/" RAMSIN
+    #sed -i "s/$yearString/$actualYearString/" RAMSIN
     sed -i "s/$runTypeString/$actualRunTypeString/" RAMSIN
 
     if [ ! -d $carpetaDatos/IVAR/$startDate ]; then
@@ -34,10 +34,14 @@ function runBrams {
         mkdir $carpetaDatos/ANL/$startDate
     fi
 
+    if [ ! -d $carpetaDatos/UMIDADE/$startDate ]; then
+        mkdir $carpetaDatos/UMIDADE/$startDate
+    fi
+
     if [ "$runType" = "MAKESFC" ] || [ "$runType" = "MAKEVFILE" ]; then
         mpirun -np 1 brams
     else
-        mpirun -np 4 brams
+        mpirun -np 1 brams
     fi
 }
 

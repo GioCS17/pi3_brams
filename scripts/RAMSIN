@@ -11,9 +11,9 @@
 
 !  Start of simulation or ISAN processing
 
-   IMONTH1  =12,      ! Month
+   IMONTH1  =09,      ! Month
    IDATE1  =26,      ! Day
-   IYEAR1  =2019,      ! Year
+   IYEAR1  =2020,      ! Year
    ITIME1   = 00,    ! GMT of model TIME = 0.
 
 ! Grid specifications
@@ -163,7 +163,7 @@
                              ! =0 - no analysis nudging
                              !                  2=variable
 !
-   VARFPFX  = '/data/dataout/IVAR/2019122600/BRAMS',      ! Varfile initialization file prefix
+   VARFPFX  = '/data/dataout/IVAR/2020092600/BRAMS',      ! Varfile initialization file prefix
    VWAIT1   = 0.,            ! wait between each VFILE check (s)
    VWAITTOT = 0.,            ! total wait befor giving up on a VFILE (s)
 
@@ -205,8 +205,8 @@
  
    IPOS     =  2,                ! 0-no files, 2-grads files, 1-hdf5(not available yet) 
    IOUTPUT  =  2,                ! 0-no files, 1-hdf5 files, 2-vfm files, 3-mpiio files, 4-binary(not available yet)
-   HFILOUT  = '/data/dataout/HIS/2019122600/BRAMS',       ! History file prefix
-   AFILOUT  = '/data/dataout/ANL/2019122600/BRAMS',       ! Analysis file prefix
+   HFILOUT  = '/data/dataout/HIS/2020092600/BRAMS',       ! History file prefix
+   AFILOUT  = '/data/dataout/ANL/2020092600/BRAMS',       ! Analysis file prefix
    ICLOBBER = 1,                 ! 0=stop if files exist, 1=overwite files
    IHISTDEL = 1,                 ! 0=keep all hist files, 1=delete previous
    FRQHIS   = 864000,           ! History file frequency
@@ -245,7 +245,7 @@
 
    ITOPTFN = '/data/shared_datain/SURFACE_DATA/topo1km/EL',
                                        
-   ISSTFN  = '/data/datain/SST/2019/W',
+   ISSTFN  = '/data/datain/SST/2020/W',
 
    IVEGTFN = '/data/shared_datain/SURFACE_DATA/GL_OGE_INPE/OGE',
             
@@ -277,7 +277,7 @@
 ! Microphysics collection tables
 
    MKCOLTAB = 0,             ! Make table: 0 = no, 1 = yes
-   COLTABFN = './tables/micro/ct2.0',
+   COLTABFN = '/tables/micro/ct2.0',
                              ! Filename to read or write
 
    MAPAOTFILE = './tables/rad_carma/infMapAOT.vfm',
@@ -422,8 +422,8 @@
                           ! l => Looking for 5 days old files,
                           ! and if not found again then stop.
 
-   USDATA_IN  = '/data/datain/UMIDADE/GL_SM.GPNR',  ! Soil Moisture File prefix
-   USMODEL_IN = '/data/dataout/UMIDADE/GL_SM.GPNR.', ! File prefix with pre-calculated data by BRAMS
+   USDATA_IN  = '/data/datain/UMIDADE/2020092600/GL_SM.GPNR',  ! Soil Moisture File prefix
+   USMODEL_IN = '/data/dataout/UMIDADE/2020092600/GL_SM.GPNR.', ! File prefix with pre-calculated data by BRAMS
    
    SLZ     =  -12.25, -7.25, -4.250, -2.25, -1.0, -0.35, -0.10,       ! soil grid levels
 
@@ -435,7 +435,7 @@
  
 !--------- Eddy diffusion coefficient parameters -----------------------
  
-   IDIFFK  = 2,              ! K flag:
+   IDIFFK  = 1,              ! K flag:
                              !  1 - Horiz deform/Vert Mellor-Yamada
                              !  2 - Anisotropic deformormation
                              !      (horiz & vert differ)
@@ -621,13 +621,13 @@
 ! Input data file prefixes
 
    !IAPR    =  './datain/dp-cptec/dp', ! Input press level dataset
-   IAPR    =  '/data/datain/dp-files/2019122600/dp', ! Input press level dataset
+   IAPR    =  '/data/datain/dp-files/2020092600/dp', ! Input press level dataset
    IARAWI  = '', ! Archived rawindsonde file name
    IASRFCE = '', ! Archived surface obs file name
 
 ! File names and dispose flags 
 
-   VARPFX    = '/data/dataout/IVAR/2019122600/BRAMS',  ! isan file names prefix
+   VARPFX    = '/data/dataout/IVAR/2020092600/BRAMS',  ! isan file names prefix
    IOFLGISZ  = 0,           ! Isen-sigz file flag: 0 = no write, 1 = write
    IOFLGVAR  = 1,           ! Var file flag: 0 = no write, 1 = write
 
@@ -721,7 +721,7 @@
     NVP = 1,
     VP = 'tempk',
  
-    GPREFIX = './dataout/POSPROCESS/METEO-ONLY',
+    GPREFIX = '/data/dataout/POSPROCESS/METEO-ONLY',
     ANL2GRA = 'ONE',
     PROJ='YES',
     MEAN_TYPE ='VMP', 
@@ -745,6 +745,6 @@
    $METEOGRAM
      applyMeteogram = .false.,
      meteogramFreq  = 1800.,
-     meteogramMap  = './tables/meteogram/citiesBr.txt',
-     meteogramDir   = './HST2014013012'
+     meteogramMap  = '/tables/meteogram/citiesBr.txt',
+     meteogramDir   = '/HST2014013012'
    $END
