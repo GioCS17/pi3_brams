@@ -250,13 +250,13 @@ function getGLFAOINPE {
     printf "\nChecking if GLFAO files exist...\n"
 
     if [ ! -f "$surfaceFolder/GL_FAO_INPE" ]; then
-        echo "GLFAO files don't exist... Downloading GLFAO Files..."
-        wget -nc -P $surfaceFolder ${cptecSourceDataAddress}/soil-fao/GL_FAO_INPE.tar.gz
         mkdir $glfaoFolder
-        tar -zxvf $surfaceFolder/GL_FAO_INPE.tar.gz -C $glfaoFolder
-        mv $glfaoFolder/soil-fao/* $glfaoFolder
-        rm -f $surfaceFolder/GL_FAO_INPE.tar.gz
-        rm -rf $glfaoFolder/soil-fao
+        mkdir $glfaoFolder/tmp
+        echo "GLFAO files don't exist... Downloading GLFAO Files..."
+        wget -nc -P $glfaoFolder/tmp ${cptecSourceDataAddress}/soil-fao/GL_FAO_INPE.tar.gz
+        tar -zxvf $glfaoFolder/tmp/GL_FAO_INPE.tar.gz -C $glfaoFolder/tmp
+        mv $glfaoFolder/tmp/soil-fao/* $glfaoFolder
+        rm -rf $glfaoFolder/tmp
     fi
 }
 
