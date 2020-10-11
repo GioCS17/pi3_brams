@@ -1,9 +1,9 @@
 !=======================================================================
   $MODEL_GRIDS
 
-   EXPNME   = 'BRAMS 5.3 S. America',
+   EXPNME   = 'BRAMS 5.3 meteo-only',
 
-   RUNTYPE  = 'MAKESFC',    ! Type of run: MAKESFC, INITIAL, HISTORY,
+   RUNTYPE  = 'INITIAL',    ! Type of run: MAKESFC, INITIAL, HISTORY,
                             !              MAKEVFILE, or MEMORY
    TIMEUNIT = 'h',          ! 'h','m','s' - Time units of TIMMAX, TIMSTR, VTIME
 
@@ -21,9 +21,9 @@
    NGRIDS   = 1,            ! Number of grids to run
                             ! **version 5.x of BRAMS only admits 1 grid**
  
-   NNXP     = 1360, 318, 154, ! Number of x gridpoints
-   NNYP     = 1480, 346, 102, ! Number of y gridpoints
-   NNZP     = 45,  38,  38, ! Number of z gridpoints
+   NNXP     = 60, 318, 154, ! Number of x gridpoints
+   NNYP     = 60, 346, 102, ! Number of y gridpoints
+   NNZP     = 35,  38,  38, ! Number of z gridpoints
    NZG      = 7,	    ! Number of soil layers
    NZS      = 1,	    ! Maximum number of snow layers
  
@@ -34,11 +34,11 @@
    IF_ADAP  = 0,
    
    IHTRAN   = 1,	   ! 0-Cartesian, 1-Polar stereo
-   DELTAX   = 6052,      ! X grid spacing
-   DELTAY   = 4800,      ! Y grid spacing
-   DELTAZ   = 60,        ! Z grid spacing (set to 0. to use ZZ)
+   DELTAX   = 35000,      ! X grid spacing
+   DELTAY   = 35000,      ! Y grid spacing
+   DELTAZ   = 100,        ! Z grid spacing (set to 0. to use ZZ)
    DZRAT    = 1.1,         ! Vertical grid stretch ratio
-   DZMAX    = 850.,       ! Maximum delta Z for vertical stretch
+   DZMAX    = 1000.,       ! Maximum delta Z for vertical stretch
   ! Vertical levels if DELTAZ = 0
    ZZ       = 0.0,        
      20.0,      46.0,      80.0,     120.0,     165.0,
@@ -50,7 +50,7 @@
   10700., 11700., 12700., 13700., 14700., 15700., 16700.,
   17700., 18700., 19700.,
  
-   DTLONG   = 8,        ! Coarse grid long timestep
+   DTLONG   = 60,        ! Coarse grid long timestep
    NACOUST  = 3,          ! Small timestep ratio
    IDELTAT  = 0,          ! =0 - constant timesteps
                           ! >0 - initial computation <0 - variable
@@ -67,10 +67,10 @@
    NSTRATZ2 = 3,3,2,1,    !
 
 
-   POLELAT  = -21.95,      ! Latitude  of pole point
+   POLELAT  = -9.0,      ! Latitude  of pole point
    POLELON  = -75.0,      ! Longitude of pole point
 
-   CENTLAT  = -21.95, -23.0, ! Latitude  of grid center 
+   CENTLAT  = -9.0, -23.0, ! Latitude  of grid center 
    CENTLON  = -75.0, -46.65,! Longitude of grid center 
                            
 			    ! Grid point on the next coarser
@@ -106,7 +106,7 @@
 			      !'PARALLEL' = original method (D->)
                               !                             (Q->)
 
-   CHEM_TIMESTEP = 300., ! chemistry timestep integration (seconds)
+   CHEM_TIMESTEP = 240., ! chemistry timestep integration (seconds)
                         ! should be an multiple of dtlong (max 4)
 
    CHEMISTRY_AQ = 0,  !  1 - ON
@@ -204,13 +204,13 @@
 ! History/analysis file output
  
    IPOS     =  2,                ! 0-no files, 2-grads files, 1-hdf5(not available yet) 
-   IOUTPUT  =  0,                ! 0-no files, 1-hdf5 files, 2-vfm files, 3-mpiio files, 4-binary(not available yet)
+   IOUTPUT  =  2,                ! 0-no files, 1-hdf5 files, 2-vfm files, 3-mpiio files, 4-binary(not available yet)
    HFILOUT  = '/data/dataout/HIS/2020100700/BRAMS',       ! History file prefix
    AFILOUT  = '/data/dataout/ANL/2020100700/BRAMS',       ! Analysis file prefix
    ICLOBBER = 1,                 ! 0=stop if files exist, 1=overwite files
    IHISTDEL = 1,                 ! 0=keep all hist files, 1=delete previous
    FRQHIS   = 864000,           ! History file frequency
-   FRQANL   = 216000,             ! Analysis file frequency
+   FRQANL   = 3600,             ! Analysis file frequency
 
 !-----------------------------------------------------------------------
    KWRITE   = 0,             ! 1-write,0-don't write scalar K's to anal.
@@ -251,7 +251,7 @@
             
    ISOILFN = '/data/shared_datain/SURFACE_DATA/GL_FAO_INPE/FAO',
 
-   NDVIFN  = '/data/shared_datain/SURFACE_DATA/NDVI-MODIS_vfm/N',
+   NDVIFN  = '/data/shared_datain/SURFACE_DATA/NDVI-MODIS_vfm/N',           
              
      
 ! Topography scheme
@@ -265,7 +265,7 @@
                              ! For ITOPSFLG=2 or 3, Reflected Envelope
                              !   and Envelope Orography enhancement
                              !   factor
-   TOPTWVL  = -4,2.,2.,   ! Topo wavelength cutoff in filter 
+   TOPTWVL  = 3,2.,2.,   ! Topo wavelength cutoff in filter 
                                 
 ! Surface Roughness scheme
 
@@ -328,13 +328,13 @@
 ! Parameters needed by CARMA radiation scheme
    RADDATFN  = '/brams-5.3/bin/tables/rad_carma/rad_param.data',
    
-   RADFRQ   = 1800,          ! Freq. of radiation tendency update (s)
+   RADFRQ   = 1200,          ! Freq. of radiation tendency update (s)
    LONRAD   = 1,	      ! Longitudinal variation of shortwave
                               !    (0-no, 1-yes)
  
 ! Cumulus parameterization parameters
  
-   NNQPARM  = 6,       ! Convective param. flag 
+   NNQPARM  = 5,       ! Convective param. flag 
                        ! 0- off,
                        ! 1- Tremback formulation
 		       ! 2- Grell-Deveny scheme
@@ -356,11 +356,11 @@
    G3D_SPREAD	= 0, ! Lateral spreading of enviromental subsidence (0=off, 1=on)
                      ! (only for NNQPARM  = 3 and grid spacing < 10km)
 
-   NNSHCU   = 2,         ! Shallow Cumulus Param. 
+   NNSHCU   = 0,         ! Shallow Cumulus Param. 
                          !(0-off, 1-Souza scheme, 2-Grell-Deveny scheme,Ocea
 			 ! 3- Grell-Freitas scheme 2015)
-   CONFRQ   = 900.,      ! Frequency of conv param. updates (s)
-   SHCUFRQ  = 900.,      ! Frequency of Shallow param. updates (s)
+   CONFRQ   = 600.,      ! Frequency of conv param. updates (s)
+   SHCUFRQ  = 600.,      ! Frequency of Shallow param. updates (s)
    WCLDBS   = .0005,     ! Vertical motion needed at cloud base for
                          !    to trigger convection
  
@@ -381,7 +381,7 @@
                              !  4-Reserved
                              !  5-JULES
 
-   NVGCON   = 9,             ! Vegetation type (see below)
+   NVGCON   = 8,             ! Vegetation type (see below)
    
    !   1 -- Crop/mixed farming         2 -- Short grass  
    !   3 -- Evergreen needleleaf tree  4 -- Deciduous needleleaf tree  
@@ -429,7 +429,7 @@
 
    SLMSTR  =   0.45, 0.45, 0.30, 0.25, 0.22, 0.22, 0.22, ! initial soil moisture
                           
-   STGOFF =    .0, .0, .0, .0, .0, .0, .0, 0.0, 0.0,  ! Initial soil temperature offset
+   STGOFF =    .0, .0, .0, .0, .0, .0, .0, .0, .0,  ! Initial soil temperature offset
                                                       ! from lowest atmospheric level
 !--------------------------------------------------------------------------
  
@@ -444,21 +444,21 @@
                              !  4 - Deardorff TKE (horiz and vert same)
 			     !  7 - Nakanishi TKE 2.5-level model
 			     
-   IHORGRAD = 0,             !  1 - horiz grad frm decomposed sigma grad
+   IHORGRAD = 2,             !  1 - horiz grad frm decomposed sigma grad
                              !  2 - true horizontal gradient. 
                              !      Non-conserving, but allows small DZ
    CSX     = .32,            ! Deformation horiz. K's coefficient
    CSZ     = .35,            ! Deformation vert. K's coefficient
    XKHKM   = 3.,	     ! Ratio of horiz K_h to K_m for deformation
    ZKHKM   = 3.,	     ! Ratio of vert K_h to K_m for deformation
-   AKMIN   = -1.6,   	     ! Ratio of minimum horizontal eddy
+   AKMIN   = 1.,   	     ! Ratio of minimum horizontal eddy
                              ! viscosity coefficientto typical value
                              ! from deformation K
 !------------------------------------------------------------------------------
  
 ! Microphysics
 
-   MCPHYS_TYPE = 0,          ! microphysics formulation
+   MCPHYS_TYPE = 2,          ! microphysics formulation
                              ! 0 = original brams
 			     ! 1 = 2-moment from CSU rams6.0
 			     ! 2 = Greg Thompson cloud water single moment
@@ -473,22 +473,22 @@
                              !   1 - New Power Laws (R.Carver,Mitchell 1996)
  
    ICLOUD  = 5,              ! Microphysics flags
-   IDRIZ   = 0,              !  
-   IRAIN   = 2,              !-------------------
-   IPRIS   = 5,              !  1 - diagnostic concen.
-   ISNOW   = 2,              !  2 - specified mean diameter
-   IAGGR   = 2,              !  3 - specified y-intercept
-   IGRAUP  = 2,              !  4 - specified concentration
-   IHAIL   = 2,              !  5 - prognostic concentration
+   IDRIZ   = 5,              !  
+   IRAIN   = 5,              !-------------------
+   IPRIS   = 6,              !  1 - diagnostic concen.
+   ISNOW   = 5,              !  2 - specified mean diameter
+   IAGGR   = 5,              !  3 - specified y-intercept
+   IGRAUP  = 5,              !  4 - specified concentration
+   IHAIL   = 5,              !  5 - prognostic concentration
                              
-   CPARM   = .3e9,           !  Microphysics parameters
+   CPARM   = 300.,           !  Microphysics parameters
    RPARM   = 1.e-3,          !-------------------------
-   PPARM   = 1.e-6,             !  Characteristic diameter, # concentration
+   PPARM   = 1.e+5,             !  Characteristic diameter, # concentration
    SPARM   = 1.e-3,          !    or y-intercept
    APARM   = 1.e-3,
    GPARM   = 1.e-3,
    HPARM   = 3.e-3,
-   DPARM   = 1.e-5,          ! (5 = 3D homogeneous 6 = vertical profile)
+   DPARM   = 1.e-1,          ! (5 = 3D homogeneous 6 = vertical profile)
 
    GNU     = 2., ! Gamma shape parms for
                                    ! cld rain pris snow aggr graup hail
@@ -718,11 +718,8 @@
   $END
 
   $POST
-    NVP = 4,
-    VP = 'topo', 
-         'tempc', 
-         'tempk', 
-         'rh',
+    NVP = 1,
+    VP = 'tempk',
  
     GPREFIX = '/data/dataout/POSPROCESS/METEO-ONLY',
     ANL2GRA = 'ONE',
@@ -734,8 +731,8 @@
     LONF = -26.933,
     ZLEVMAX = 19,
     IPRESSLEV = 1,
-    INPLEVS = 19,
-    IPLEVS = 1000, 925, 900, 850, 800, 750, 700, 650, 600, 550, 500, 450, 400, 350, 300, 250, 200, 150, 100,
+    INPLEVS = 13,
+    IPLEVS = 1000, 975, 950, 925, 900, 850, 800, 750, 700, 500, 300, 200, 100,
     ASCII_DATA ='NO',
     SITE_LAT = -10.76,
     SITE_LON = -62.36,
